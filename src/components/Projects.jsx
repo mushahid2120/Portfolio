@@ -1,8 +1,23 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { projects } from '../data/projects'
 
 const Projects = () => {
   const projectRefs = useRef([])
+  const [currentImageIndex, setCurrentImageIndex] = useState({})
+
+  const handlePrevImage = (projectId) => {
+    setCurrentImageIndex((prev) => ({
+      ...prev,
+      [projectId]: prev[projectId] > 0 ? prev[projectId] - 1 : (projects.find(p => p.id === projectId)?.images?.length || 1) - 1
+    }))
+  }
+
+  const handleNextImage = (projectId, totalImages) => {
+    setCurrentImageIndex((prev) => ({
+      ...prev,
+      [projectId]: prev[projectId] !== undefined && prev[projectId] < totalImages - 1 ? prev[projectId] + 1 : 0
+    }))
+  }
 
   useEffect(() => {
     const observerOptions = {
@@ -29,6 +44,28 @@ const Projects = () => {
     }
   }, [])
 
+  const renderCarousel = (project) => {
+    const images = project.images && project.images.length > 0 ? project.images : [project.image]
+    const currentIdx = currentImageIndex[project.id] || 0
+
+    return (
+      <div className="project-carousel">
+        <img src={images[currentIdx]} alt={`${project.name} - ${currentIdx + 1}`} className="project-thumb" />
+        {images.length > 1 && (
+          <>
+            <button className="carousel-btn prev" onClick={() => handlePrevImage(project.id)} aria-label="Previous image">‹</button>
+            <button className="carousel-btn next" onClick={() => handleNextImage(project.id, images.length)} aria-label="Next image">›</button>
+            <div className="carousel-dots">
+              {images.map((_, idx) => (
+                <span key={idx} className={`dot ${idx === currentIdx ? 'active' : ''}`} onClick={() => setCurrentImageIndex(prev => ({ ...prev, [project.id]: idx }))}></span>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    )
+  }
+
   return (
     <section id="work">
       <div className="wrap">
@@ -42,11 +79,16 @@ const Projects = () => {
 
         {projects.slice(0, 3).map((project, idx) => (
           <div key={project.id} className="project reveal" ref={(el) => (projectRefs.current[idx] = el)}>
-            <img src={project.image} alt={project.name} className="project-thumb" />
+            {renderCarousel(project)}
             <div className="project-body">
               <div className="project-top">
-                <h3 className="project-name">{project.name}</h3>
-                <span className="project-index mono">PRJ / {project.index}</span>
+                <div className="project-title-row">
+                  {project.logo && (
+                    <img src={project.logo} alt={`${project.name} logo`} className="project-logo" />
+                  )}
+                  <h3 className="project-name">{project.name}</h3>
+                </div>
+                
               </div>
               <p className="project-desc">{project.description}</p>
               <div className="project-meta">
@@ -66,10 +108,15 @@ const Projects = () => {
 
         {projects.slice(3).map((project, idx) => (
           <div key={project.id} className="project reveal" ref={(el) => (projectRefs.current[idx + 3] = el)}>
-            <img src={project.image} alt={project.name} className="project-thumb" />
+            {renderCarousel(project)}
             <div className="project-body">
               <div className="project-top">
-                <h3 className="project-name">{project.name}</h3>
+                <div className="project-title-row">
+                  {project.logo && (
+                    <img src={project.logo} alt={`${project.name} logo`} className="project-logo" />
+                  )}
+                  <h3 className="project-name">{project.name}</h3>
+                </div>
                 <span className="project-index mono">{project.index}</span>
               </div>
               <p className="project-desc">{project.description}</p>

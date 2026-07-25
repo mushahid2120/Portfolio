@@ -32,7 +32,7 @@ const Skills = () => {
         <div className="sec-head">
           <span className="sec-num mono">02</span>
           <div>
-            <h2 className="sec-title">Capabilities</h2>
+            <h2 className="sec-title">Skills</h2>
             <p className="sec-sub">Web development first, AI as an applied layer on top of it — plus just enough tooling to ship what I build.</p>
           </div>
         </div>

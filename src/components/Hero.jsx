@@ -28,22 +28,16 @@ const Hero = () => {
           </div>
 
           <div className="photo-frame">
-            <div className="photo-label">
-              <span>Fig. 01</span><span>Profile</span>
-            </div>
             <div className="photo-box">
-              <img src="https://via.placeholder.com/400x400?text=Mushahid" alt="Mushahid" onError={(e) => e.target.style.display = 'none'} />
+              <img src="/profile_pic.png" alt="Mushahid" onError={(e) => e.target.style.display = 'none'} />
               <span className="monogram" style={{ display: 'none' }}>M</span>
-            </div>
-            <div className="photo-caption">
-              <span>Mushahid</span><span>Full Stack / AI</span>
             </div>
           </div>
         </div>
 
         <div className="titleblock">
           <div className="tb-row">
-            <div className="tb-cell"><div className="tb-label">Name</div><div className="tb-value">Mushahid</div></div>
+            <div className="tb-cell"><div className="tb-label">Name</div><div className="tb-value">Md Mushahid Ansari</div></div>
             <div className="tb-cell"><div className="tb-label">Focus</div><div className="tb-value">Full Stack + AI</div></div>
             <div className="tb-cell"><div className="tb-label">Base discipline</div><div className="tb-value">B.Tech, Mech. Eng.</div></div>
             <div className="tb-cell"><div className="tb-label">Status</div><div className="tb-value" style={{ color: 'var(--cyan)' }}>Available</div></div>
