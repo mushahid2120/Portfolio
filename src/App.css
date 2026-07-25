@@ -92,7 +92,7 @@ header.hero {
 
 @media (max-width: 640px) {
   .hero-grid {
-    grid-template-columns: 1fr 0.75fr;
+    grid-template-columns: 1fr;
     gap: 24px;
   }
 }
